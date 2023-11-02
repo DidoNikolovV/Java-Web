@@ -13,6 +13,7 @@ import java.util.UUID;
 
 @Component
 public class DBInit implements CommandLineRunner {
+
     private final AuthorRepository authorRepository;
     private final BookRepository bookRepository;
 
