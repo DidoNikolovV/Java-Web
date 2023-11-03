@@ -1,35 +1,32 @@
-let reloadBooksButton = document.getElementById("reloadBooks");
+let reloadBooksButton = document.getElementById('reloadBooks');
 
-reloadBooksButton.addEventListener('click', reloadBooks)
+reloadBooksButton.addEventListener('click', reloadBooks);
 
 function reloadBooks() {
 
     let booksContainer = document.getElementById('books-container');
-
     booksContainer.innerHTML = '';
+
 
     fetch('http://localhost:8080/api/books')
         .then(res => res.json())
-        .then(json => json.forEach(book =>  {
+        .then(json => json.forEach(book => {
             let bookRow = document.createElement('tr');
 
-            let titleCol = document.createElement('td')
-            let authorCol = document.createElement('td')
-            let isbnCol = document.createElement('td')
-            let actionCol = document.createElement('td')
-
+            let titleCol = document.createElement('td');
+            let authorCol = document.createElement('td');
+            let isbnCol = document.createElement('td');
+            let actionCol = document.createElement('td');
 
             titleCol.textContent = book.title;
             authorCol.textContent = book.author.name;
-            isbnCol.textContent = book.isbn;
 
-            let deleteBtn = document.createElement("button");
+            let deleteBtn = document.createElement('button');
             deleteBtn.innerHTML = 'Delete';
             deleteBtn.dataset.id = book.id;
-            deleteBtn.addEventListener('click', deleteBtnClicked);
+            deleteBtn.addEventListener('click', deleteBook);
 
-            actionCol.appendChild(deleteBtn);
-
+            actionCol.append(deleteBtn);
 
             bookRow.appendChild(titleCol);
             bookRow.appendChild(authorCol);
@@ -37,16 +34,14 @@ function reloadBooks() {
             bookRow.appendChild(actionCol);
 
             booksContainer.append(bookRow);
-        }))
+        }));
 }
 
-function deleteBtnClicked(event) {
-
-    let bookId = event.target.dataset.id;
+function deleteBook(e) {
+    let bookId = e.target.dataset.id;
     let requestOptions = {
         method: 'DELETE'
     }
-
 
     fetch(`http://localhost:8080/api/books/${bookId}`, requestOptions)
         .then(_ => reloadBooks())
