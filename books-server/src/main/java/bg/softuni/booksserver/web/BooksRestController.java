@@ -11,6 +11,8 @@ import java.awt.print.Book;
 import java.util.List;
 import java.util.Optional;
 
+
+@CrossOrigin("*")
 @RestController
 @RequestMapping("/api/books")
 public class BooksRestController {
